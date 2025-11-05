@@ -5,14 +5,17 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"github.com/a2jensen/pokedexcli/internal/pokeapi"
 )
 
 func startRepl() {
 	reader := bufio.NewScanner(os.Stdin)
-
+	prev := ""
+	next := "https://pokeapi.co/api/v2/location-area?limit=20&offset=0"
 	configuration := config{
-		Previous : "",
-		Next :		"https://pokeapi.co/api/v2/location-area?limit=20&offset=0",
+		Previous :		&prev,
+		Next :			&next,
+		API :			pokeapi.New("https://pokeapi.co/api/v2"),
 	}
 
 	for {
@@ -53,8 +56,9 @@ type cliCommand struct {
 }
 
 type config struct {
-	Previous 	string
-	Next		string
+	Previous 	*string
+	Next		*string
+	API			pokeapi.Client
 }
 
 func getCommands() map[string]cliCommand {
