@@ -34,10 +34,26 @@ func (c *HTTPClient) ListLocationAreas(url string) (ListResp, error) {
 
 	defer res.Body.Close()
 	var LocationAreas ListResp
-	if err := json.NewDecoder(res.Body).Decode(&LocationAreas); err != nil {
+
+	LocationAreas, err = Decode[ListResp](res)
+	if err != nil {
 		return ListResp{}, err
 	}
 
-	return LocationAreas, nil
+	/**
+	if err := json.NewDecoder(res.Body).Decode(&LocationAreas); err != nil {
+		return ListResp{}, err
+	} */
 
+	return LocationAreas, nil
+}
+
+// general function used to decode any type(locations, pokemon, etc.)
+func Decode[T any](res *http.Response) (T, error) {
+	var result T
+	if err := json.NewDecoder(res.Body).Decode(&result); err != nil {
+		var zero T
+		return zero, err
+	}
+	return result, nil
 }

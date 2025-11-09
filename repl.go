@@ -5,7 +5,10 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 	"github.com/a2jensen/pokedexcli/internal/pokeapi"
+	"github.com/a2jensen/pokedexcli/internal/pokecache"
+
 )
 
 func startRepl() {
@@ -16,6 +19,7 @@ func startRepl() {
 		Previous :		&prev,
 		Next :			&next,
 		API :			pokeapi.New("https://pokeapi.co/api/v2"),
+		Cache :			pokecache.NewCache(10 * time.Second),
 	}
 
 	for {
@@ -49,17 +53,6 @@ func cleanInput(text string) []string {
 	return words
 }
 
-type cliCommand struct {
-	name        string
-	description string
-	callback    func(c *config) error
-}
-
-type config struct {
-	Previous 	*string
-	Next		*string
-	API			pokeapi.Client
-}
 
 func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
