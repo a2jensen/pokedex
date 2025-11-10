@@ -78,3 +78,16 @@ func getCommands() map[string]cliCommand {
 		},
 	}
 }
+
+type cliCommand struct {
+	name        string
+	description string
+	callback    func(c *config) error
+}
+
+type config struct {
+	Previous 	*string
+	Next		*string
+	API			pokeapi.Client
+	Cache		pokecache.PokeCache
+}

@@ -77,6 +77,7 @@ func commandMap(c *config) error {
 	return nil
 }
 
+// not working
 func formatURL(link string, setOffset int) (string) {
 	parsed, err := url.Parse(link)
 	if err != nil {
