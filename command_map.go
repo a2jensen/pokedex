@@ -8,7 +8,7 @@ import (
 	"github.com/a2jensen/pokedexcli/internal/pokeapi"
 )
 
-func commandMap(c *config) error {
+func commandMap(c *config, param ...string) error {
 	var data pokeapi.ListResp
 	cacheResp, found := c.Cache.Get(*c.Next)
 	if found {

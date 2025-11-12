@@ -8,7 +8,7 @@ import (
 	"encoding/json"
 )
 
-func commandMapb(c *config) error {
+func commandMapb(c *config, param ...string) error {
 	var data pokeapi.ListResp
 	cacheResp, found:= c.Cache.Get(*c.Previous)
 	if found {

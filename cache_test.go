@@ -7,6 +7,11 @@ import (
 	"github.com/a2jensen/pokedexcli/internal/pokecache"
 	"encoding/json"
 )
+// go test -v ./...
+func TestBasic(t *testing.T) {
+    t.Log("✅ test ran successfully")
+}
+
 
 func TestAddGet(t *testing.T) {
 	const interval = 5 * time.Second

@@ -2,11 +2,13 @@ package pokeapi
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
 type Client interface {
 	ListLocationAreas(url string) (ListResp,error)
+	ListLocationPokemon(location string) ([]string, error)
 }
 
 
@@ -40,12 +42,31 @@ func (c *HTTPClient) ListLocationAreas(url string) (ListResp, error) {
 		return ListResp{}, err
 	}
 
-	/**
-	if err := json.NewDecoder(res.Body).Decode(&LocationAreas); err != nil {
-		return ListResp{}, err
-	} */
-
 	return LocationAreas, nil
+}
+
+func (c *HTTPClient) ListLocationPokemon(url string) ([]string , error) {
+	fmt.Println(url)
+
+	res, err := c.h.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+	var locationInfo LocationInfo
+	var pokemonNames []string
+	
+	locationInfo, err = Decode[LocationInfo](res)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, encounter := range locationInfo.PokemonEncounters {
+		pokemonNames = append(pokemonNames, encounter.Pokemon.Name)
+	}
+
+	return pokemonNames, nil
 }
 
 // general function used to decode any type(locations, pokemon, etc.)
