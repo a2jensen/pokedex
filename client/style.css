@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #1a1a2e;
+    color: #eee;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: #ff6b6b;
+}
+
+h2 {
+    color: #4ecdc4;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+section {
+    background: #16213e;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#location-list,
+#pokemon-list,
+#caught-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.location-item,
+.pokemon-item,
+.caught-item {
+    background: #1a1a2e;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.location-item:hover,
+.pokemon-item:hover,
+.caught-item:hover {
+    background: #2a2a4e;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background: #4ecdc4;
+    color: #1a1a2e;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+    opacity: 0.8;
+}
+
+#current-location {
+    color: #888;
+    margin-bottom: 15px;
+}
+
+#message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4ecdc4;
+    color: #1a1a2e;
+    padding: 15px 30px;
+    border-radius: 4px;
+    display: none;
+    font-weight: bold;
+}
+
+#message.show {
+    display: block;
+}
+
+#message.error {
+    background: #ff6b6b;
+    color: #fff;
+}
+
+@media (max-width: 900px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Pokedex</h1>
+    </header>
+
+    <main>
+        <section id="locations">
+            <h2>Locations</h2>
+            <div id="location-list"></div>
+            <div class="nav-buttons">
+                <button id="prev-btn" disabled>Previous</button>
+                <button id="next-btn">Next</button>
+            </div>
+        </section>
+
+        <section id="explore">
+            <h2>Explore</h2>
+            <p id="current-location">Select a location to explore</p>
+            <div id="pokemon-list"></div>
+        </section>
+
+        <section id="pokedex">
+            <h2>My Pokedex</h2>
+            <div id="caught-list"></div>
+        </section>
+    </main>
+
+    <div id="message"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
