@@ -15,11 +15,13 @@ func startRepl() {
 	reader := bufio.NewScanner(os.Stdin)
 	prev := ""
 	next := "https://pokeapi.co/api/v2/location-area?limit=20&offset=0"
+	inventory := map[string]pokeapi.Pokemon{}
 	configuration := config{
 		Previous :		&prev,
 		Next :			&next,
 		API :			pokeapi.New("https://pokeapi.co/api/v2"),
 		Cache :			pokecache.NewCache(10 * time.Second),
+		Inventory :		inventory,
 	}
 
 	for {
@@ -81,6 +83,21 @@ func getCommands() map[string]cliCommand {
 			description:	"Find pokemon at a specific location",
 			callback: commandExplore,
 		},
+		"catch": {
+			name:		"catch",
+			description:	"Attempt to catch a pokemon",
+			callback:	commandCatch,
+		},
+		"inspect": {
+			name:		"inspect",
+			description:	"display a caught pokemon's information",
+			callback:	commandInspect,
+		},
+		"pokedex": {
+			name:		"pokedex",
+			description:	"display all pokemon captured",
+			callback:	commandPokedex,
+		},
 	}
 }
 
@@ -95,4 +112,5 @@ type config struct {
 	Next		*string
 	API			pokeapi.Client
 	Cache		pokecache.PokeCache
+	Inventory	map[string]pokeapi.Pokemon
 }

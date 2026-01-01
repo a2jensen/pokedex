@@ -9,6 +9,7 @@ import (
 type Client interface {
 	ListLocationAreas(url string) (ListResp,error)
 	ListLocationPokemon(location string) ([]string, error)
+	ListPokemon(name string) (Pokemon,error)
 }
 
 
@@ -46,8 +47,6 @@ func (c *HTTPClient) ListLocationAreas(url string) (ListResp, error) {
 }
 
 func (c *HTTPClient) ListLocationPokemon(url string) ([]string , error) {
-	fmt.Println(url)
-
 	res, err := c.h.Get(url)
 	if err != nil {
 		return nil, err
@@ -63,10 +62,29 @@ func (c *HTTPClient) ListLocationPokemon(url string) ([]string , error) {
 	}
 
 	for _, encounter := range locationInfo.PokemonEncounters {
-		pokemonNames = append(pokemonNames, encounter.Pokemon.Name)
+		pokemonNames = append(pokemonNames, encounter.PokemonName.Name)
 	}
 
 	return pokemonNames, nil
+}
+
+func (c *HTTPClient) ListPokemon(name string) (Pokemon, error) {
+	url := fmt.Sprintf("https://pokeapi.co/api/v2/pokemon/" + name)
+
+	res, err := c.h.Get(url)
+	if err != nil {
+		return Pokemon{}, err
+	}
+
+	defer res.Body.Close()
+	var pokemon Pokemon
+
+	pokemon, err = Decode[Pokemon](res)
+	if err != nil {
+		return Pokemon{}, err
+	}
+
+	return pokemon, nil
 }
 
 // general function used to decode any type(locations, pokemon, etc.)
